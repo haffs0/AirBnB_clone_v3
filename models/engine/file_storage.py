@@ -65,6 +65,19 @@ class FileStorage:
         except (AttributeError, KeyError):
             pass
 
+    def get(self, cls, id):
+        """Returns the object based on the class
+        and its ID, or None if not found"""
+        cls_dict = self.all(cls)
+        if isinstance(cls, type):
+            cls = cls.__name__
+        key = "{}.{}".format(cls, id)
+        return cls_dict.get(key)
+
+    def count(self, cls=None):
+        """Returns the number of objects in storage matching the given class"""
+        return (len(self.all(cls)))
+
     def close(self):
         """Call the reload method."""
         self.reload()
