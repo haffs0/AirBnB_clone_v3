@@ -46,7 +46,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, save_pass=False):
         """Return a dictionary representation of the BaseModel instance.
 
         Includes the key/value pair __class__ representing
@@ -57,6 +57,8 @@ class BaseModel:
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
         my_dict.pop("_sa_instance_state", None)
+        if "password" in my_dict and not save_pass:
+            my_dict.pop("password")
         return my_dict
 
     def delete(self):
