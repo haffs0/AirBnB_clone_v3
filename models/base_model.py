@@ -68,3 +68,11 @@ class BaseModel:
         d = self.__dict__.copy()
         d.pop("_sa_instance_state", None)
         return "[{}] ({}) {}".format(type(self).__name__, self.id, d)
+
+    def update(self, ignore, *args, **kwargs):
+        """updates the instance using a dictionary of kwargs"""
+        for k, v in kwargs.items():
+            if k in ignore:
+                continue
+            setattr(self, k, v)
+        self.save()
