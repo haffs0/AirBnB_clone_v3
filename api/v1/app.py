@@ -2,12 +2,14 @@
 """main app setup for Flask instance in REST API"""
 from flask import Flask, jsonify
 from models import storage
+from flask_cors import CORS
 from api.v1.views import app_views
 import os
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+CORS(app, resources={r'/*': {'origins': '0.0.0.0'}})
 
 
 def page_not_found(e):
