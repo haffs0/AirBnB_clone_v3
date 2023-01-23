@@ -10,3 +10,19 @@ from models import storage
 def service_status():
     """return the status of your API"""
     return jsonify({'status': 'OK'})
+
+
+@app_views.route('/stats', strict_slashes=False)
+def stats():
+    """retrieves the number of each objects by type"""
+    cls = {
+        "amenities": "Amenity",
+        "cities": "City",
+        "places": "Place",
+        "reviews": "Review",
+        "states": "State",
+        "users": "User"
+        }
+    for k, v in cls.items():
+        cls[k] = storage.count(v)
+    return jsonify(cls)
